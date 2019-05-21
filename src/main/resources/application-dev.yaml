@@ -1,0 +1,90 @@
+logging.config: classpath:log4j2-dev.xml
+spring:
+  datasource:
+    url: jdbc:h2:file:./database/h2-database;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    platform: h2
+    username: root
+    password: root
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        #show_sql: true
+        use_sql_comments: true
+        format_sql: true
+  h2:
+    console:
+      enabled: true
+      path: /console
+      settings:
+        trace: false
+        web-allow-others: false
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: Iv1.81e575e54d60298a
+            clientSecret: 35f9a3a5a8cd65adcecf7b814c43988f25cbdc14
+            redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - user
+              - user:email
+              - read:user
+          facebook:
+            clientId: 360218771245694
+            clientSecret: 6583919fb824ed6d737791a24e87dbfb
+            redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - email
+              - public_profile
+          google:
+            clientId: 983464398033-vgjunh6qcpbs9riprq99u46gjq7kbmcq.apps.googleusercontent.com
+            clientSecret: uVghPcBz66tey9T_2VRF6v0p
+            redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - email
+              - profile
+          linkedin:
+            clientId: 77egyay9ytt01b
+            clientSecret: gzOsf5LV44tJNCq0
+            redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+            client-authentication-method: post
+            authorization-grant-type: authorization_code
+            scope: r_liteprofile, r_emailaddress
+            client-name: Linkedin
+          instagram:
+            clientId: 2ce46829f10944d7b0b737ecf9a079ab
+            clientSecret: dff4d6fbc9b84cf1bb11a9b2b3baad1c
+            redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+            client-authentication-method: post
+            authorization-grant-type: authorization_code
+            scope: basic, public_content
+            client-name: Instagram
+        provider:
+          linkedin:
+            authorization-uri: https://www.linkedin.com/oauth/v2/authorization
+            token-uri: https://www.linkedin.com/oauth/v2/accessToken
+            user-info-uri: https://api.linkedin.com/v2/me
+            user-name-attribute: id
+          instagram:
+            authorization-uri: https://api.instagram.com/oauth/authorize
+            token-uri: https://api.instagram.com/oauth/access_token
+            user-info-uri: https://api.instagram.com/v1/users/self
+            user-name-attribute: id
+
+football:
+  key1: 27daafb5ac6742b4a7ab34b2ae44e12a
+  key2: e6af0ec31e5449ec8e8da2a4c5186188
+
+management:
+  health:
+    elasticsearch:
+      enabled: false
+  metrics:
+    export:
+      elastic:
+        enabled: false

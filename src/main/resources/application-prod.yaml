@@ -1,0 +1,69 @@
+logging.config: classpath:log4j2-prod.xml
+server:
+  port : 8060
+  use-forward-headers: true
+spring:
+  datasource:
+    url: jdbc:h2:file:./database/h2-database;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    platform: h2
+    username: root
+    password: root
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: false
+        use_sql_comments: true
+        format_sql: true
+  h2:
+    console:
+      enabled: true
+      path: /console
+      settings:
+        trace: false
+        web-allow-others: true
+  data:
+    elasticsearch:
+      cluster-name: bettor-league-cluster
+      cluster-nodes: localhost:9300
+
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: Iv1.22f4aa6e3a5e86e3
+            clientSecret: 3efe8a76a2f55b7f6de968db7f4450f3d41c847c
+            redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - user
+              - user:email
+              - read:user
+          facebook:
+            clientId: 360218771245694
+            clientSecret: 6583919fb824ed6d737791a24e87dbfb
+            redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - email
+              - public_profile
+          google:
+            clientId: 517108479410-q7ejk58t2oaq4n2dpjcav8a7ehn1ljka.apps.googleusercontent.com
+            clientSecret: XR7k8ualrsX2joZiEagoeVGD
+            redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - email
+              - profile
+football:
+  key1: 6dc34a4ea1b14522ae31451d7df9fc5e
+  key2: 1d2d673e7f5044d69f76d04ffdb11eba
+
+
+management:
+  metrics:
+    export:
+      elastic:
+        enabled: false
+        index: bettor-league-metrics

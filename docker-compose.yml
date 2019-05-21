@@ -1,0 +1,9 @@
+version: "3"
+services:
+  bettor-league-server:
+    container_name: bettor-league-server
+    build: .
+    environment:
+      - PROFILES=dev
+    ports:
+      - 8080:8080
