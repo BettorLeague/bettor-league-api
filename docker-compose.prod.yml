@@ -1,9 +1,26 @@
 version: "3"
 services:
-  bettor-league-server:
-    container_name: bettor-league-server
-    build: .
+  bettor-league-api:
+    container_name: bettor-league-api
+#    build: .
+    image: nadjim/bettor-league-api
     environment:
       - PROFILES=prod
     ports:
       - 8080:8080
+    networks:
+      - bettor-league-network
+      - default
+    external_links:
+      - bettor-league-logstash
+      - bettor-league-elasticsearch
+    labels:
+      - "traefik.backend=bettor-league-api"
+      - "traefik.docker.network=bettor-league-network"
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:api.bettorleague.ovh"
+      - "traefik.port=8080"
+
+networks:
+  bettor-league-network:
+    external: true

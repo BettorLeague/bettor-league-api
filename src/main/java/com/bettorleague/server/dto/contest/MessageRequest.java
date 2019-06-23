@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MessageRequest {
     private String content;
+    private Long playerId;
 }

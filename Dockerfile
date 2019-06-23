@@ -1,7 +1,7 @@
+FROM maven:3.6.1-jdk-8-alpine AS MAVEN_TOOL_CHAIN
+
 # Add Maintainer Info
 LABEL maintainer="c.nadjim@gmail.com"
-
-FROM maven:3.6.1-jdk-8-alpine AS MAVEN_TOOL_CHAIN
 
 WORKDIR /usr/src/app
 

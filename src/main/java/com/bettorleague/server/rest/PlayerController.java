@@ -1,5 +1,6 @@
 package com.bettorleague.server.rest;
 
+import com.bettorleague.server.dto.contest.MessageRequest;
 import com.bettorleague.server.model.bettor.Message;
 import com.bettorleague.server.model.bettor.Player;
 import com.bettorleague.server.model.bettor.Pronostic;
@@ -8,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,4 +36,9 @@ public class PlayerController {
         return new ResponseEntity<>(playerService.getMessages(playerId), HttpStatus.OK);
     }
 
+    @RequestMapping(path = "/player/{playerId}/messages", method = RequestMethod.POST)
+    public ResponseEntity<Message> postMessage(@PathVariable("playerId") Long playerId,
+                                               @RequestBody MessageRequest messageRequest) {
+        return new ResponseEntity<>(playerService.postMessage(playerId,messageRequest), HttpStatus.OK);
+    }
 }

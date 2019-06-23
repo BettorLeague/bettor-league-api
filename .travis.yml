@@ -1,0 +1,23 @@
+sudo: required
+
+services:
+  - docker
+addons:
+  apt:
+    packages:
+      - sshpass
+
+language: java
+jdk:
+  - oraclejdk8
+
+script:
+  - ./mvnw clean install -B
+
+after_success:
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+  - export IMAGE_NAME=bettor-league-api
+  - docker build -t $IMAGE_NAME .
+  - docker tag $IMAGE_NAME $DOCKER_USER/$IMAGE_NAME
+  - docker push $DOCKER_USER/$IMAGE_NAME
+  - sshpass -p $DEPLOY_PASS ssh -o stricthostkeychecking=no $DEPLOY_USER@$DEPLOY_HOST bash /$IMAGE_NAME/start.sh

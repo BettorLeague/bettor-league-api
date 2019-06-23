@@ -4,10 +4,7 @@ import com.bettorleague.server.dto.contest.MessageRequest;
 import com.bettorleague.server.dto.contest.PronosticRequest;
 import com.bettorleague.server.exception.BadRequestException;
 import com.bettorleague.server.exception.ResourceNotFoundException;
-import com.bettorleague.server.model.bettor.Contest;
-import com.bettorleague.server.model.bettor.Message;
-import com.bettorleague.server.model.bettor.Player;
-import com.bettorleague.server.model.bettor.Pronostic;
+import com.bettorleague.server.model.bettor.*;
 import com.bettorleague.server.model.football.Match;
 import com.bettorleague.server.model.security.User;
 import com.bettorleague.server.repository.bettor.ContestRepository;
@@ -129,6 +126,7 @@ public class PlayerServiceImpl implements PlayerService {
         newMessage.setContent(message.getContent());
         newMessage.setPlayer(player);
         newMessage.setDate(new Date());
+        newMessage.setType(MessageType.CHAT);
         newMessage.setContest(player.getContest());
 
         return this.messageRepository.save(newMessage);

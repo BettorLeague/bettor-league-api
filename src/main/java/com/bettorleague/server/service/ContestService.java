@@ -10,6 +10,7 @@ import java.util.Set;
 
 public interface ContestService {
 
+    Page<Message> getMessagePage(Long contestId, Pageable pageable);
     Page<Contest> getContestPage(ContestType type, Pageable pageable);
     List<Contest> getAllContest(ContestType type);
 
@@ -20,4 +21,6 @@ public interface ContestService {
     Set<Player> getPlayer(Long contestId);
     List<StandingPlayer>    getStanding(Long contestId);
     Set<Message>           getMessage(Long contestId);
+
+
 }

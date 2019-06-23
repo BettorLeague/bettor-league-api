@@ -1,6 +1,6 @@
 logging.config: classpath:log4j2-prod.xml
 server:
-  port : 8060
+  port : 8080
   use-forward-headers: true
 spring:
   datasource:
@@ -25,10 +25,13 @@ spring:
       settings:
         trace: false
         web-allow-others: true
+  elasticsearch:
+    rest:
+      uris: "bettor-league-elasticsearch:9200"
   data:
     elasticsearch:
       cluster-name: bettor-league-cluster
-      cluster-nodes: localhost:9300
+      cluster-nodes: "bettor-league-elasticsearch:9300"
 
   security:
     oauth2:
@@ -60,10 +63,10 @@ football:
   key1: 6dc34a4ea1b14522ae31451d7df9fc5e
   key2: 1d2d673e7f5044d69f76d04ffdb11eba
 
-
 management:
   metrics:
     export:
       elastic:
-        enabled: false
+        enabled: true
         index: bettor-league-metrics
+        host: "http://bettor-league-elasticsearch:9200"
