@@ -6,6 +6,7 @@ import com.bettorleague.server.model.bettor.*;
 import com.bettorleague.server.model.football.Competition;
 import com.bettorleague.server.model.security.User;
 import com.bettorleague.server.repository.bettor.ContestRepository;
+import com.bettorleague.server.repository.bettor.MessageRepository;
 import com.bettorleague.server.repository.bettor.PlayerRepository;
 import com.bettorleague.server.repository.football.CompetitionRepository;
 import com.bettorleague.server.repository.security.UserRepository;
@@ -22,6 +23,7 @@ import java.util.Set;
 public class ContestServiceImpl implements ContestService {
 
     private final ContestRepository contestRepository;
+    private final MessageRepository messageRepository;
     private final PlayerRepository playerRepository;
     private final UserRepository userRepository;
     private final CompetitionRepository competitionRepository;
@@ -29,16 +31,24 @@ public class ContestServiceImpl implements ContestService {
     public ContestServiceImpl(ContestRepository contestRepository,
                               PlayerRepository playerRepository,
                               UserRepository userRepository,
+                              MessageRepository messageRepository,
                               CompetitionRepository competitionRepository){
         this.contestRepository = contestRepository;
         this.playerRepository = playerRepository;
         this.userRepository = userRepository;
+        this.messageRepository = messageRepository;
         this.competitionRepository = competitionRepository;
     }
 
     public Page<Contest> getContestPage(ContestType type,Pageable pageable){
         if(type == null) return contestRepository.findAll(pageable);
         else return this.contestRepository.findByType(type,pageable);
+    }
+
+    public Page<Message> getMessagePage(Long contestId, Pageable pageable){
+        contestRepository.findById(contestId)
+                .orElseThrow(() -> new ResourceNotFoundException("Contest", "id", contestId));
+        return this.messageRepository.findAllByContestId(contestId,pageable);
     }
 
     public List<Contest> getAllContest(ContestType type){
@@ -134,6 +144,9 @@ public class ContestServiceImpl implements ContestService {
 
         return result;
     }
+
+
+
 
 
 

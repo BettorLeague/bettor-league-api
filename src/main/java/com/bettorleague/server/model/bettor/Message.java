@@ -1,9 +1,10 @@
 package com.bettorleague.server.model.bettor;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -15,6 +16,8 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@EqualsAndHashCode(exclude={"contest"})
 public class Message {
 
     @Id
@@ -27,9 +30,14 @@ public class Message {
     @NotNull
     private Player player;
 
+    @Column(name = "TYPE")
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private MessageType type;
+
     @Column(name = "DATE")
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private Date date;
 
     @Column(name = "CONTENT", columnDefinition="TEXT")
