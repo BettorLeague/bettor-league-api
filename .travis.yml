@@ -16,7 +16,6 @@ script:
   - ./mvnw clean install -B
 
 after_success:
-  - test $TRAVIS_PULL_REQUEST = "true" && travis_terminate 1
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
   - export IMAGE_NAME=bettor-league-api
   - docker build -t $IMAGE_NAME .
