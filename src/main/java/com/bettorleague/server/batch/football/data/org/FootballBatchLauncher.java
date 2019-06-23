@@ -35,7 +35,7 @@ public class FootballBatchLauncher {
         this.jobLauncher = jobLauncher;
     }
 
-    //@Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 1000)
     void launchCompetitionJob() throws
             JobParametersInvalidException,
             JobExecutionAlreadyRunningException,
