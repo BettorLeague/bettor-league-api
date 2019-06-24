@@ -20,11 +20,7 @@ services:
       - "traefik.enable=true"
       - "traefik.frontend.rule=Host:api.bettorleague.ovh"
       - "traefik.port=8080"
-<<<<<<< HEAD
-=======
       - "traefik.webservice.frontend.entryPoints=http,https,ws,wss"
-
->>>>>>> nadjim
 
 networks:
   bettor-league-network:
