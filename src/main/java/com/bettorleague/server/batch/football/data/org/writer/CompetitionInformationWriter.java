@@ -77,17 +77,19 @@ public class CompetitionInformationWriter implements Tasklet {
 
             if (competition.getType().equals(Competitiontype.LEAGUE)){
                 Season season = competition.getCurrentSeason();
-                Team team = competition.getStandings().stream()
+                Optional<Standing> standingOptional = competition.getStandings().stream()
                         .filter(item -> item.getType().equals(StandingType.TOTAL))
-                        .findFirst()
-                        .get()
-                        .getTable()
-                        .stream()
-                        .filter(item -> item.getPosition() == 1)
-                        .findFirst()
-                        .get()
-                        .getTeam();
-                season.setCurrentLeader(team);
+                        .findFirst();
+                if(standingOptional.isPresent()){
+                    Optional<StandingTable> standingTableOptional = standingOptional.get().getTable()
+                            .stream()
+                            .filter(item -> item.getPosition() == 1)
+                            .findFirst();
+                    if(standingTableOptional.isPresent()){
+                        Team team = standingTableOptional.get().getTeam();
+                        season.setCurrentLeader(team);
+                    }
+                }
                 seasonRepository.save(season);
             }
         }

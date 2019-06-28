@@ -32,7 +32,7 @@ public class User {
     @Column(nullable = false)
     private String email;
 
-    private String picture;
+    private String picture = "http://angular-material.fusetheme.com/assets/images/avatars/profile.jpg";
 
     @Column(nullable = false)
     private Boolean emailVerified = false;

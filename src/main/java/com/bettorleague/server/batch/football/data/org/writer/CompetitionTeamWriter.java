@@ -53,12 +53,14 @@ public class CompetitionTeamWriter implements ItemWriter<Team> {
 
                 } else {
 
-                    Optional<Area> areaOptional = areaRepository.findById(team.getArea().getId());
+                    if(team.getArea() != null){
+                        Optional<Area> areaOptional = areaRepository.findById(team.getArea().getId());
 
-                    if (areaOptional.isPresent()) {
-                        team.setArea(areaOptional.get());
-                    } else {
-                        team.setArea(areaRepository.save(team.getArea()));
+                        if (areaOptional.isPresent()) {
+                            team.setArea(areaOptional.get());
+                        } else {
+                            team.setArea(areaRepository.save(team.getArea()));
+                        }
                     }
 
                     team.getCompetitions().add(competition);
