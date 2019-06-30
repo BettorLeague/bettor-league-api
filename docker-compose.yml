@@ -7,3 +7,5 @@ services:
       - PROFILES=dev
     ports:
       - 8080:8080
+    volumes:
+      - ./database:/database
