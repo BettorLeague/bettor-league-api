@@ -47,27 +47,29 @@ public class CompetitionServiceImpl implements CompetitionService {
         return this.teamRepository.findAllByCompetitions(competition);
     }
     public List<Match> getAllMatchesOfCompetition(Long competitionId, Integer matchDay, StandingStage stage, StandingGroup group){
+        Competition competition = competitionRepository.findById(competitionId)
+                .orElseThrow( () -> new ResourceNotFoundException("Competition", "id", competitionId) );
         List<Match> matches;
         if(matchDay == null && stage == null && group == null){
-            matches = this.matchRepository.findAllByCompetitionId(competitionId);
+            matches = this.matchRepository.findAllByCompetitionIdAndSeasonId(competitionId,competition.getCurrentSeason().getId());
         }else {
             if(matchDay != null){
                 if(stage == null && group == null){
-                    matches =  this.matchRepository.findAllByCompetitionIdAndMatchday(competitionId,matchDay);
+                    matches =  this.matchRepository.findAllByCompetitionIdAndSeasonIdAndMatchday(competitionId,competition.getCurrentSeason().getId(),matchDay);
                 }else if (stage == null){
-                    matches =  this.matchRepository.findAllByCompetitionIdAndMatchdayAndGroup(competitionId,matchDay,group);
+                    matches =  this.matchRepository.findAllByCompetitionIdAndSeasonIdAndMatchdayAndGroup(competitionId,competition.getCurrentSeason().getId(),matchDay,group);
                 }else if( group == null){
-                    matches =  this.matchRepository.findAllByCompetitionIdAndMatchdayAndStage(competitionId,matchDay,stage);
+                    matches =  this.matchRepository.findAllByCompetitionIdAndSeasonIdAndMatchdayAndStage(competitionId,competition.getCurrentSeason().getId(),matchDay,stage);
                 }else {
-                    matches =  this.matchRepository.findAllByCompetitionIdAndMatchdayAndStageAndGroup(competitionId,matchDay,stage,group);
+                    matches =  this.matchRepository.findAllByCompetitionIdAndSeasonIdAndMatchdayAndStageAndGroup(competitionId,competition.getCurrentSeason().getId(),matchDay,stage,group);
                 }
             }else {
                 if(stage == null){
-                    matches =  this.matchRepository.findAllByCompetitionIdAndGroup(competitionId,group);
+                    matches =  this.matchRepository.findAllByCompetitionIdAndSeasonIdAndGroup(competitionId,competition.getCurrentSeason().getId(),group);
                 }else if( group == null){
-                    matches =  this.matchRepository.findAllByCompetitionIdAndStage(competitionId,stage);
+                    matches =  this.matchRepository.findAllByCompetitionIdAndSeasonIdAndStage(competitionId,competition.getCurrentSeason().getId(),stage);
                 }else {
-                    matches =  this.matchRepository.findAllByCompetitionIdAndStageAndGroup(competitionId,stage,group);
+                    matches =  this.matchRepository.findAllByCompetitionIdAndSeasonIdAndStageAndGroup(competitionId,competition.getCurrentSeason().getId(),stage,group);
                 }
             }
         }

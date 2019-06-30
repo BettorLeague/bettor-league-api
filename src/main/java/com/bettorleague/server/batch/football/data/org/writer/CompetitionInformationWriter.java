@@ -44,7 +44,7 @@ public class CompetitionInformationWriter implements Tasklet {
     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) {
         if(competitionOptional.isPresent()){
             Competition competition = competitionOptional.get();
-            List<Match> matches = matchRepository.findAllByCompetitionId(competition.getId());
+            List<Match> matches = matchRepository.findAllByCompetitionIdAndSeasonId(competition.getId(),competition.getCurrentSeason().getId());
             List<Standing> standings = standingRepository.findAllByCompetitionId(competition.getId());
             List<Team> teams = teamRepository.findAllByCompetitions(competition);
 

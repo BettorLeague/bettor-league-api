@@ -21,7 +21,7 @@ public class Match implements Comparable<Match> {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="SEASON_ID")
+    @JoinColumn(name = "SEASON_ID")
     @JsonIgnore
     private Season season;
 
@@ -30,15 +30,15 @@ public class Match implements Comparable<Match> {
     //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm:ss")
     private Date utcDate;
 
-    @Column(name="STATUS")
+    @Column(name = "STATUS")
     private String status;
 
-    @Column(name="MATCHDAY")
+    @Column(name = "MATCHDAY")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer matchday;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="STANDING_STAGE")
+    @Column(name = "STANDING_STAGE")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private StandingStage stage;
 
@@ -48,15 +48,15 @@ public class Match implements Comparable<Match> {
     private StandingGroup group;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name="HOME_TEAM_ID")
+    @JoinColumn(name = "HOME_TEAM_ID")
     private Team homeTeam;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name="AWAY_TEAM_ID")
+    @JoinColumn(name = "AWAY_TEAM_ID")
     private Team awayTeam;
 
-    @OneToOne(cascade= CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name="SCORE_ID")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "SCORE_ID")
     private Score score;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -69,17 +69,14 @@ public class Match implements Comparable<Match> {
     private Competition competition;
 
     @Override
-    public int compareTo(Match other){
-        if(this.matchday != null && other.getMatchday() != null){
+    public int compareTo(Match other) {
+        if (this.matchday != null && other.getMatchday() != null) {
             int matchday = this.matchday.compareTo(other.getMatchday());
             if (matchday != 0) {
                 return matchday;
             }
         }
-        int day = this.utcDate.compareTo(other.getUtcDate());
-        if (day != 0) {
-            return day;
-        }
+
         int homeTeam = this.getHomeTeam().getName().compareTo(other.getHomeTeam().getName());
         if (homeTeam != 0) {
             return homeTeam;
