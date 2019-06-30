@@ -4,6 +4,8 @@ services:
     container_name: bettor-league-api
 #    build: .
     image: nadjim/bettor-league-api
+    volumes:
+      - ./database:/database
     environment:
       - PROFILES=prod
     ports:
