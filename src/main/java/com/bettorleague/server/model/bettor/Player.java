@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -56,6 +57,9 @@ public class Player implements Comparable<Player> {
     @OneToMany(mappedBy="player",cascade= CascadeType.ALL,fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Message> messages = new ArrayList<>();
+
+    @Formula("(select player.contest_id from player where player.id=id)")
+    private long contestId;
 
     @Override
     public int compareTo(Player other) {
