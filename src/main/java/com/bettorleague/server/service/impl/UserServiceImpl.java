@@ -276,20 +276,22 @@ public class UserServiceImpl implements UserService {
             Integer year = cal.get(Calendar.YEAR);
             Integer month = cal.get(Calendar.MONTH);
 
-            UserStatistic userStatistic = new UserStatistic();
+            UserStatistic userStatistic;
 
             if(response.getStats().containsKey(year)){
                 userStatistic = response.getStats().get(year);
+            }else{
+                userStatistic = new UserStatistic();
             }
 
             if (pronostic.getMatch().getStatus().equals("FINISHED") && pronostic.getMatch().getScore().getWinner().equals(pronostic.getResult())) {
                 userStatistic.getGoodPronostics().add(month,userStatistic.getGoodPronostics().get(month)+1);
             }
-            userStatistic.getPronostics().add(month,userStatistic.getPronostics().get(month)+1);
+
+            userStatistic.getPronostics().set(month, userStatistic.getPronostics().get(month) + 1);
             userStatistic.getContests().add(pronostic.getPlayer().getContest());
             response.getStats().put(year,userStatistic);
         }
-
         return response;
     }
 

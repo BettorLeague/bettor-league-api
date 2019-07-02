@@ -39,33 +39,6 @@ public class UserStatistic{
         this.goodPronostics.add(9,0);
         this.goodPronostics.add(10,0);
         this.goodPronostics.add(11,0);
-
-        /*
-        this.pronostics.put("JAN",0);
-        this.pronostics.put("FEB",0);
-        this.pronostics.put("MAR",0);
-        this.pronostics.put("APR",0);
-        this.pronostics.put("MAY",0);
-        this.pronostics.put("JUN",0);
-        this.pronostics.put("JUL",0);
-        this.pronostics.put("AUG",0);
-        this.pronostics.put("SEP",0);
-        this.pronostics.put("OCT",0);
-        this.pronostics.put("NOV",0);
-        this.pronostics.put("DEC",0);
-
-        this.goodPronostics.put("JAN",0);
-        this.goodPronostics.put("FEB",0);
-        this.goodPronostics.put("MAR",0);
-        this.goodPronostics.put("APR",0);
-        this.goodPronostics.put("MAY",0);
-        this.goodPronostics.put("JUN",0);
-        this.goodPronostics.put("JUL",0);
-        this.goodPronostics.put("AUG",0);
-        this.goodPronostics.put("SEP",0);
-        this.goodPronostics.put("OCT",0);
-        this.goodPronostics.put("NOV",0);
-        this.goodPronostics.put("DEC",0);*/
     }
 
 }
