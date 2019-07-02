@@ -152,6 +152,10 @@ public class PlayerServiceImpl implements PlayerService {
         Pronostic pronostic;
         if(pronosticOptional.isPresent()){
             pronostic = pronosticOptional.get();
+            if(pronosticRequest.getResult().equals(pronostic.getResult())){
+                this.pronosticRepository.deleteById(pronostic.getId());
+                return null;
+            }
             pronostic.setDate(new Date());
             pronostic.setResult(pronosticRequest.getResult());
         }else {
