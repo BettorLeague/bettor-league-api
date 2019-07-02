@@ -1,6 +1,8 @@
 package com.bettorleague.server.service.impl;
 
 import com.bettorleague.server.dto.contest.PronosticRequest;
+import com.bettorleague.server.dto.contest.StatisticResponse;
+import com.bettorleague.server.dto.contest.UserStatistic;
 import com.bettorleague.server.exception.BadRequestException;
 import com.bettorleague.server.exception.ResourceNotFoundException;
 import com.bettorleague.server.model.bettor.Contest;
@@ -43,7 +45,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     PronosticRepository pronosticRepository;
 
-    public List<User> getAll(){
+    public List<User> getAll() {
         return this.userRepository.findAll();
     }
 
@@ -60,12 +62,12 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(
-                () -> new ResourceNotFoundException("User", "id", id));
+                        () -> new ResourceNotFoundException("User", "id", id));
         return UserPrincipal.create(user);
     }
 
 
-    public User deleteUser(Long userId){
+    public User deleteUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(
                         () -> new ResourceNotFoundException("User", "id", userId));
@@ -73,7 +75,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    public List<Player> getPlayers(Long userId){
+    public List<Player> getPlayers(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(
                         () -> new ResourceNotFoundException("User", "id", userId));
@@ -81,7 +83,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public List<Contest> getContests(Long userId){
+    public List<Contest> getContests(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(
                         () -> new ResourceNotFoundException("User", "id", userId));
@@ -90,7 +92,7 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
-    public List<Pronostic> getPronostics(Long userId){
+    public List<Pronostic> getPronostics(Long userId) {
         userRepository.findById(userId)
                 .orElseThrow(
                         () -> new ResourceNotFoundException("User", "id", userId));
@@ -99,7 +101,7 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
-    public Player subscribe(Long contestId,Long userId){
+    public Player subscribe(Long contestId, Long userId) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(
@@ -108,10 +110,10 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(
                         () -> new ResourceNotFoundException("Contest", "id", contestId));
 
-        return playerService.create(contest.getId(),user.getId());
+        return playerService.create(contest.getId(), user.getId());
     }
 
-    public Player unSubscribe(Long contestId,Long userId){
+    public Player unSubscribe(Long contestId, Long userId) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(
@@ -122,14 +124,14 @@ public class UserServiceImpl implements UserService {
                         () -> new ResourceNotFoundException("Contest", "id", contestId));
 
         Player player = user.getPlayers().stream()
-                .filter(item-> item.getContest().getId().equals(contestId))
+                .filter(item -> item.getContest().getId().equals(contestId))
                 .findAny()
-                .orElseThrow(() -> new BadRequestException(user.getName()+" didnt play in this contest"));
+                .orElseThrow(() -> new BadRequestException(user.getName() + " didnt play in this contest"));
 
         return playerService.delete(player.getId());
     }
 
-    private Player getPlayer(Long contestId,Long userId){
+    private Player getPlayer(Long contestId, Long userId) {
         contestRepository.findById(contestId)
                 .orElseThrow(
                         () -> new ResourceNotFoundException("Contest", "id", contestId));
@@ -141,32 +143,31 @@ public class UserServiceImpl implements UserService {
         return user.getPlayers().stream()
                 .filter(player -> player.getContest().getId().equals(contestId))
                 .findAny()
-                .orElseThrow(() -> new BadRequestException(user.getName()+" didnt play in this contest"));
+                .orElseThrow(() -> new BadRequestException(user.getName() + " didnt play in this contest"));
 
     }
 
-    public Pronostic pronostic(Long contestId, Long userId, PronosticRequest pronosticRequest){
-        Player player = getPlayer(contestId,userId);
-        return playerService.savePronostic(player.getId(),pronosticRequest);
+    public Pronostic pronostic(Long contestId, Long userId, PronosticRequest pronosticRequest) {
+        Player player = getPlayer(contestId, userId);
+        return playerService.savePronostic(player.getId(), pronosticRequest);
     }
 
-    public List<Pronostic> getContestPronostics(Long contestId, Long userId){
-        Player player = getPlayer(contestId,userId);
+    public List<Pronostic> getContestPronostics(Long contestId, Long userId) {
+        Player player = getPlayer(contestId, userId);
         return playerService.getPronostics(player.getId());
     }
 
-    public List<Message> getContestMessages(Long contestId, Long userId){
-        Player player = getPlayer(contestId,userId);
+    public List<Message> getContestMessages(Long contestId, Long userId) {
+        Player player = getPlayer(contestId, userId);
         return playerService.getMessages(player.getId());
     }
 
-    public Player getContestPlayer(Long contestId, Long userId){
-        return getPlayer(contestId,userId);
+    public Player getContestPlayer(Long contestId, Long userId) {
+        return getPlayer(contestId, userId);
     }
 
 
-
-    public Team subscribeTeam(Long teamId, Long userId){
+    public Team subscribeTeam(Long teamId, Long userId) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(
@@ -182,7 +183,7 @@ public class UserServiceImpl implements UserService {
         return team;
     }
 
-    public Team unSubscribeTeam(Long teamId, Long userId){
+    public Team unSubscribeTeam(Long teamId, Long userId) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(
@@ -199,7 +200,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public Set<Team> getSubscribedTeam(Long userId){
+    public Set<Team> getSubscribedTeam(Long userId) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(
@@ -209,21 +210,21 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public Set<User> getFollowers(Long userId){
+    public Set<User> getFollowers(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(
                         () -> new ResourceNotFoundException("User", "id", userId));
         return user.getFollowers();
     }
 
-    public Set<User> getFollowing(Long userId){
+    public Set<User> getFollowing(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(
                         () -> new ResourceNotFoundException("User", "id", userId));
         return user.getFollowing();
     }
 
-    public Set<User> follow(Long userId, Long followingId){
+    public Set<User> follow(Long userId, Long followingId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(
                         () -> new ResourceNotFoundException("User", "id", userId));
@@ -239,7 +240,7 @@ public class UserServiceImpl implements UserService {
         return user.getFollowing();
     }
 
-    public Set<User> unFollow(Long userId, Long followingId){
+    public Set<User> unFollow(Long userId, Long followingId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(
                         () -> new ResourceNotFoundException("User", "id", userId));
@@ -248,8 +249,8 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(
                         () -> new ResourceNotFoundException("User", "id", followingId));
 
-        if(!following.getFollowers().contains(user)){
-            throw new BadRequestException("User "+user.getName() + " dont follow "+following.getName());
+        if (!following.getFollowers().contains(user)) {
+            throw new BadRequestException("User " + user.getName() + " dont follow " + following.getName());
         }
 
         user.getFollowing().remove(following);
@@ -261,6 +262,67 @@ public class UserServiceImpl implements UserService {
         return user.getFollowing();
     }
 
+    public StatisticResponse getStats(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("User", "id", userId));
+        List<Pronostic> pronostics = this.getPronostics(user.getId());
+
+        StatisticResponse response = new StatisticResponse();
+
+        for (Pronostic pronostic : pronostics){
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(pronostic.getDate());
+            Integer year = cal.get(Calendar.YEAR);
+            Integer month = cal.get(Calendar.MONTH);
+
+            UserStatistic userStatistic = new UserStatistic();
+
+            if(response.getStats().containsKey(year)){
+                userStatistic = response.getStats().get(year);
+            }
+
+            if (pronostic.getMatch().getStatus().equals("FINISHED") && pronostic.getMatch().getScore().getWinner().equals(pronostic.getResult())) {
+                userStatistic.getGoodPronostics().add(month,userStatistic.getGoodPronostics().get(month)+1);
+            }
+            userStatistic.getPronostics().add(month,userStatistic.getPronostics().get(month)+1);
+            userStatistic.getContests().add(pronostic.getPlayer().getContest());
+            response.getStats().put(year,userStatistic);
+        }
+
+        return response;
+    }
+
+    private String getKeyByMonth(Integer month) {
+        switch (month) {
+            case 0:
+                return "JAN";
+            case 1:
+                return "FEB";
+            case 2:
+                return "MAR";
+            case 3:
+                return "APR";
+            case 4:
+                return "MAY";
+            case 5:
+                return "JUN";
+            case 6:
+                return "JUL";
+            case 7:
+                return "AUG";
+            case 8:
+                return "SEP";
+            case 9:
+                return "OCT";
+            case 10:
+                return "NOV";
+            case 11:
+                return "DEC";
+            default:
+                return null;
+        }
+    }
 
 
 }

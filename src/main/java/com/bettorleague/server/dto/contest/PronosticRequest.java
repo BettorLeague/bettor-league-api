@@ -1,7 +1,7 @@
 package com.bettorleague.server.dto.contest;
 
 
-import com.bettorleague.server.model.bettor.PronosticResult;
+import com.bettorleague.server.model.football.ScoreResult;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,10 +15,9 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PronosticRequest {
-
     @Valid
     @NotNull
-    private PronosticResult result;
+    private ScoreResult result;
 
     @NotNull
     private Long matchId;

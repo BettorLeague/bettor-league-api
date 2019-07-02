@@ -1,6 +1,7 @@
 package com.bettorleague.server.rest;
 
 import com.bettorleague.server.dto.contest.PronosticRequest;
+import com.bettorleague.server.dto.contest.StatisticResponse;
 import com.bettorleague.server.model.bettor.Contest;
 import com.bettorleague.server.model.bettor.Message;
 import com.bettorleague.server.model.bettor.Player;
@@ -157,6 +158,13 @@ public class UserController {
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<Set<User>> getFollowers(@ApiIgnore @ApiParam(hidden = true) @CurrentUser UserPrincipal userPrincipal) {
         return new ResponseEntity<>(userService.getFollowers(userPrincipal.getId()), HttpStatus.OK);
+    }
+
+
+    @RequestMapping(path = "/user/stats", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<StatisticResponse> getStats(@ApiIgnore @ApiParam(hidden = true) @CurrentUser UserPrincipal userPrincipal) {
+        return new ResponseEntity<>(userService.getStats(userPrincipal.getId()), HttpStatus.OK);
     }
 
 }

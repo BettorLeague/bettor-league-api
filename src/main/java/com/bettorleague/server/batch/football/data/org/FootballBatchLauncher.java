@@ -22,7 +22,7 @@ import java.util.*;
 public class FootballBatchLauncher {
 
 
-    private final List<String> competitions = Arrays.asList("2001", "2002", "2014", "2015", "2019", "2021","2003","2013");
+    private final List<String> competitions = Arrays.asList("2002", "2014", "2015", "2019", "2021","2003","2013");
 
     private final Job job;
 

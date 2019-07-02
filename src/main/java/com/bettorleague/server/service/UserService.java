@@ -1,6 +1,7 @@
 package com.bettorleague.server.service;
 
 import com.bettorleague.server.dto.contest.PronosticRequest;
+import com.bettorleague.server.dto.contest.StatisticResponse;
 import com.bettorleague.server.model.bettor.Contest;
 import com.bettorleague.server.model.bettor.Message;
 import com.bettorleague.server.model.bettor.Player;
@@ -37,4 +38,5 @@ public interface UserService extends UserDetailsService {
     Set<User> unFollow(Long userId, Long followingId);
 
     Pronostic pronostic(Long contestId, Long userId, PronosticRequest pronosticRequest);
+    StatisticResponse getStats(Long userId);
 }

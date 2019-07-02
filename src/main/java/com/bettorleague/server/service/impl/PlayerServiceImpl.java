@@ -152,11 +152,13 @@ public class PlayerServiceImpl implements PlayerService {
         Pronostic pronostic;
         if(pronosticOptional.isPresent()){
             pronostic = pronosticOptional.get();
+            pronostic.setDate(new Date());
             pronostic.setResult(pronosticRequest.getResult());
         }else {
             pronostic = new Pronostic();
             pronostic.setResult(pronosticRequest.getResult());
             pronostic.setMatch(match);
+            pronostic.setDate(new Date());
             pronostic.setPlayer(player);
         }
         pronostic = pronosticRepository.save(pronostic);
